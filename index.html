@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tecmaster - Отдел Заботы</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -35,6 +35,7 @@
             background-color: #f0f0f0;
             font-family: 'Montserrat', sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden; /* Запрет скролла для iPhone */
         }
 
         .main-container {
@@ -44,9 +45,9 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            flex-shrink: 0; /* Чтобы контейнер не сжимался */
         }
 
-        /* ВЕРХНЯЯ ПАНЕЛЬ */
         .upbar {
             position: absolute;
             width: 100%; 
@@ -56,7 +57,6 @@
             object-fit: contain;
         }
 
-        /* Тексты */
         .title {
             position: absolute;
             font-weight: 800;
@@ -92,7 +92,6 @@
             z-index: 5;
         }
 
-        /* Кнопки */
         .action-btn {
             position: absolute;
             width: 360px;
@@ -124,6 +123,7 @@
         .text-1 { width: 192px; top: 330px; left: 52px; }
         .text-2 { width: 138px; top: 421px; left: 52px; }
 
+        /* ВОТ ТВОИ НАСТРОЙКИ ИКОНОК */
         .btn-icon {
             position: absolute;
             width: 25px;
@@ -168,9 +168,10 @@
     </main>
 
     <script>
-        // Инициализация Telegram
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.disableVerticalSwiping();
     </script>
 </body>
 </html>
