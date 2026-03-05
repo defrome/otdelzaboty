@@ -27,34 +27,35 @@
             line-height: 100%;
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
+        body, html {
+            /* Убираем любые системные отступы body */
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #E8E8E8;
             font-family: 'Montserrat', sans-serif;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden; /* Запрет скролла для iPhone */
+            overflow: hidden; /* Блокируем лишний скролл */
         }
 
         .main-container {
-            width: 422px;
-            height: 625px;
+            width: 100%; /* На всю ширину */
+            height: 100vh; /* На всю доступную высоту окна */
             background: var(--bg-main);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-            flex-shrink: 0; /* Чтобы контейнер не сжимался */
+            /* Убираем центровку через flex, чтобы контейнер просто заполнил экран */
         }
 
+        /* ТВОИ ОРИГИНАЛЬНЫЕ НАРАБОТКИ БЕЗ ИЗМЕНЕНИЙ КООРДИНАТ */
         .upbar {
             position: absolute;
             width: 100%; 
             top: 0;
             left: 0;
             z-index: 100;
-            object-fit: contain;
+            object-fit: cover; /* Чтобы upbar растягивался корректно */
         }
 
         .title {
@@ -123,7 +124,6 @@
         .text-1 { width: 192px; top: 330px; left: 52px; }
         .text-2 { width: 138px; top: 421px; left: 52px; }
 
-        /* ВОТ ТВОИ НАСТРОЙКИ ИКОНОК */
         .btn-icon {
             position: absolute;
             width: 25px;
@@ -137,7 +137,8 @@
             position: absolute;
             width: 104px;
             height: 45px;
-            top: 543px;
+            /* Чтобы на iPhone с кнопкой 'домой' логотип не прилипал к краю */
+            bottom: 40px; 
             left: 159px;
             z-index: 10;
         }
@@ -172,6 +173,10 @@
         tg.ready();
         tg.expand();
         tg.disableVerticalSwiping();
+        
+        // Красим системные элементы Telegram в цвет твоего фона
+        tg.setHeaderColor('#E8E8E8');
+        tg.setBackgroundColor('#E8E8E8');
     </script>
 </body>
 </html>
