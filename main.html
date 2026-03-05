@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecmaster - Отдел Заботы</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: linear-gradient(180deg, #E8E8E8 0%, #C3C3C3 100%);
+            --text-grad: linear-gradient(180deg, #000000 0%, #666666 100%);
+            --btn-grad-1: linear-gradient(180deg, #000000 0%, #1C1C1A 100%);
+            --btn-grad-2: linear-gradient(180deg, #000000 0%, #1C1D18 100%);
+            --accent-grad: linear-gradient(180deg, #FFD250 0%, #FFC20F 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .main-container {
+            width: 422px;
+            height: 625px;
+            background: var(--bg-main);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        /* ВЕРХНЯЯ ПАНЕЛЬ */
+        .upbar {
+            position: absolute;
+            width: 100%; 
+            top: 0;
+            left: 0;
+            z-index: 100;
+            object-fit: contain;
+        }
+
+        /* Тексты */
+        .title {
+            position: absolute;
+            font-weight: 800;
+            font-size: 48px;
+            text-transform: uppercase;
+            background: var(--text-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10;
+        }
+        .otdel { top: 85px; left: 31px; width: 181px; }
+        .zaboty { top: 132px; left: 31px; width: 229px; }
+
+        .description {
+            position: absolute;
+            width: 197px;
+            top: 191px;
+            left: 30px;
+            font-weight: 300;
+            font-size: 13px;
+            color: #000000;
+            z-index: 10;
+        }
+
+        .product-img {
+            position: absolute;
+            width: 143px;
+            height: 215px;
+            top: 84px;
+            left: 248px;
+            border-radius: 25px;
+            object-fit: cover;
+            z-index: 5;
+        }
+
+        /* Кнопки */
+        .action-btn {
+            position: absolute;
+            width: 360px;
+            height: 70px;
+            border-radius: 25px;
+            box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+        .btn-1 { top: 319px; left: 31px; background: var(--btn-grad-1); }
+        .btn-2 { top: 410px; left: 32px; background: var(--btn-grad-2); }
+
+        .accent-rect {
+            position: absolute;
+            width: 104px;
+            height: 70px;
+            background: var(--accent-grad);
+            border-radius: 25px;
+            top: 0;
+            left: 256px; 
+        }
+
+        .btn-text {
+            position: absolute;
+            font-weight: 600;
+            font-size: 20px;
+            color: #FFFFFF;
+            z-index: 15;
+        }
+        .text-1 { width: 192px; top: 330px; left: 52px; }
+        .text-2 { width: 138px; top: 421px; left: 52px; }
+
+        .btn-icon {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            z-index: 20;
+        }
+        .icon-1 { top: 341px; left: 326px; }
+        .icon-2 { top: 432px; left: 327px; }
+
+        .bottom-logo {
+            position: absolute;
+            width: 104px;
+            height: 45px;
+            top: 543px;
+            left: 159px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+        <img src="upbar.png" alt="Upper Bar" class="upbar">
+
+        <div class="title otdel">ОТДЕЛ</div>
+        <div class="title zaboty">ЗАБОТЫ</div>
+        <p class="description">
+            Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
+        </p>
+
+        <img src="tecmasterimage_1.png" alt="Product" class="product-img">
+
+        <div class="action-btn btn-1"><div class="accent-rect"></div></div>
+        <div class="btn-text text-1">Беспроигрышная лотерея</div>
+        <img src="button_image.png" class="btn-icon icon-1">
+
+        <div class="action-btn btn-2"><div class="accent-rect"></div></div>
+        <div class="btn-text text-2">С покупкой что-то не так</div>
+        <img src="button_image.png" class="btn-icon icon-2">
+
+        <img src="spraystorelogo.png" class="bottom-logo">
+    </main>
+
+    <script>
+        // Инициализация Telegram
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+    </script>
+</body>
+</html>
