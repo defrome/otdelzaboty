@@ -16,7 +16,6 @@
             --bg-main: linear-gradient(180deg, #E8E8E8 0%, #C3C3C3 100%);
             --text-grad: linear-gradient(180deg, #000000 0%, #666666 100%);
             --btn-grad: linear-gradient(180deg, #000000 0%, #1C1C1A 100%);
-            /* ЗАМЕНА ГРАДИЕНТА НА FLAT ЦВЕТ */
             --accent-color: #FFBE00;
         }
 
@@ -24,7 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            line-height: 100%;
+            line-height: 1.2;
         }
 
         body, html {
@@ -32,85 +31,79 @@
             height: 100%;
             background-color: #E8E8E8;
             font-family: 'Montserrat', sans-serif;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
         }
 
+        /* Основной скролл-контейнер */
         .main-container {
-            width: 422px;
-            height: 100vh;
+            width: 100%;
+            max-width: 422px;
+            min-height: 100vh;
             background: var(--bg-main);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
+            padding-bottom: 30px; /* Отступ под логотипом */
+            overflow-x: hidden;
+        }
+
+        /* Декор сверху */
+        .upbar {
+            width: 100%;
+            height: auto;
             flex-shrink: 0;
         }
 
-        /* Декор сверху (upbar.png) */
-        .upbar {
-            position: absolute;
+        /* Контентная часть (Заголовок + Описание + Фото) */
+        .hero-section {
             width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-
-        /* Заголовок (ОТДЕЛ ЗАБОТЫ) */
-        .title-block {
-            position: absolute;
-            top: 85px;
-            left: 31px;
-            z-index: 20;
+            padding: 20px 31px;
+            display: grid;
+            grid-template-columns: 1fr 143px; /* Текст слева, фото справа */
+            gap: 15px;
+            margin-top: -20px; /* Немного заходим под upbar для красоты */
         }
 
         .title-line {
             font-weight: 800;
-            font-size: 48px;
+            font-size: clamp(32px, 10vw, 48px);
             text-transform: uppercase;
             background: var(--text-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: -5px;
+            display: block;
         }
 
-        /* Описание */
         .desc-text {
-            position: absolute;
-            width: 197px;
-            top: 191px;
-            left: 31px;
+            grid-column: 1 / 2;
             font-weight: 300;
             font-size: 13px;
             color: #000000;
-            line-height: 1.2;
-            z-index: 20;
+            margin-top: 15px;
+            max-width: 200px;
         }
 
-        /* Фото товара (tecmasterimage_1) */
         .product-img {
-            position: absolute;
             width: 143px;
             height: 215px;
-            top: 84px;
-            right: 31px;
             border-radius: 25px;
             object-fit: cover;
-            z-index: 15;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         /* Контейнер кнопок */
         .menu-buttons {
-            position: absolute;
-            top: 319px;
-            left: 31px;
+            width: 100%;
+            padding: 30px 31px;
             display: flex;
             flex-direction: column;
-            gap: 21px; /* Расстояние между кнопками */
-            z-index: 30;
+            gap: 21px;
         }
 
-        /* Большая кнопка */
         .big-btn {
-            width: 360px;
+            width: 100%;
+            max-width: 360px;
             height: 70px;
             background: var(--btn-grad);
             border-radius: 25px;
@@ -119,54 +112,50 @@
             border: none;
             display: flex;
             align-items: center;
-            box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.25);
-            transition: 0.1s;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            overflow: hidden; /* Чтобы желтая вставка не вылезала */
         }
 
-        .big-btn:active {
-            transform: scale(0.98);
-        }
+        .big-btn:active { transform: scale(0.98); }
 
-        /* Небольшой эффект при наведении, т.к. цвет flat */
-        .big-btn:hover {
-            filter: brightness(0.95);
-        }
-
-        /* Текст на кнопке */
         .big-btn-text {
             color: #FFFFFF;
             font-weight: 600;
-            font-size: 20px;
+            font-size: 18px;
             margin-left: 21px;
             text-align: left;
+            z-index: 2;
         }
 
-        /* Желтая вставка внутри кнопки */
         .btn-yellow-accent {
             position: absolute;
             right: 0;
             top: 0;
-            width: 104px;
+            width: 80px; /* Чуть уменьшил для адаптивности */
             height: 100%;
-            /* ИСПОЛЬЗУЕМ FLAT ЦВЕТ */
             background-color: var(--accent-color);
-            border-radius: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 20px;
         }
 
-        /* Иконка стрелки (button_image) */
         .arrow-icon {
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Прослойка, выталкивающая лого вниз */
+        .spacer {
+            flex-grow: 1;
+            min-height: 40px;
         }
 
         .bottom-logo {
-            position: absolute;
             width: 104px;
-            bottom: 40px;
-            left: 159px;
+            height: auto;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -175,16 +164,16 @@
     <main class="main-container">
         <img src="upbar.png" class="upbar">
 
-        <div class="title-block">
-            <div class="title-line">ОТДЕЛ</div>
-            <div class="title-line">ЗАБОТЫ</div>
-        </div>
-
-        <p class="desc-text">
-            Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
-        </p>
-
-        <img src="tecmasterimage_1.png" class="product-img">
+        <section class="hero-section">
+            <div class="text-side">
+                <span class="title-line">ОТДЕЛ</span>
+                <span class="title-line">ЗАБОТЫ</span>
+                <p class="desc-text">
+                    Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
+                </p>
+            </div>
+            <img src="tecmasterimage_1.png" class="product-img">
+        </section>
 
         <div class="menu-buttons">
             <button class="big-btn" id="lottery-btn">
@@ -201,6 +190,8 @@
                 </div>
             </button>
         </div>
+
+        <div class="spacer"></div>
 
         <img src="spraystorelogo.png" class="bottom-logo">
     </main>
@@ -220,27 +211,15 @@
             console.warn("Telegram WebApp API не найдено");
         }
 
-        const lotteryButton = document.getElementById('lottery-btn');
-        if (lotteryButton) {
-            lotteryButton.onclick = function() {
-                if (tg.HapticFeedback) {
-                    tg.HapticFeedback.impactOccurred('medium');
-                }
-                // Ведет на ПЕРВУЮ страницу воронки проверки
-                window.location.href = 'check.html';
-            };
-        }
+        document.getElementById('lottery-btn').onclick = function() {
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            window.location.href = 'check.html';
+        };
 
-        const supportButton = document.getElementById('support-link');
-        if (supportButton) {
-            supportButton.onclick = function() {
-                if (tg.HapticFeedback) {
-                    tg.HapticFeedback.impactOccurred('medium');
-                }
-                // Можно добавить логику перехода в чат поддержки
-                // tg.openTelegramLink('https://t.me/tecmaster_support');
-            };
-        }
+        document.getElementById('support-link').onclick = function() {
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            // tg.openTelegramLink('https://t.me/your_bot_support'); 
+        };
     </script>
 </body>
 </html>
