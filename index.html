@@ -171,35 +171,28 @@
     </main>
 
     <script>
-        // Безопасная инициализация Telegram WebApp
         const tg = window.Telegram.WebApp;
         
         try {
             tg.ready();
             tg.expand();
-            // Убираем проблемную функцию disableVerticalSwiping, 
-            // либо оборачиваем в проверку существования
             if (tg.isVersionAtLeast && tg.isVersionAtLeast('7.7')) {
                 tg.disableVerticalSwiping();
             }
-            
             tg.setHeaderColor('#E8E8E8');
             tg.setBackgroundColor('#E8E8E8');
         } catch (e) {
-            console.warn("Telegram WebApp API не найдено, работаем в браузере.");
+            console.warn("Telegram WebApp API не найдено");
         }
 
-        // Обработка клика
         const lotteryButton = document.getElementById('lottery-btn');
         if (lotteryButton) {
             lotteryButton.onclick = function() {
-                // Вибрация (если доступна)
                 if (tg.HapticFeedback) {
                     tg.HapticFeedback.impactOccurred('medium');
                 }
-                
-                // Переход (добавил проверку пути)
-                window.location.href = 'roulette.html';
+                // ТЕПЕРЬ ВЕДЕТ НА ПРОВЕРКУ
+                window.location.href = 'check.html';
             };
         }
     </script>
