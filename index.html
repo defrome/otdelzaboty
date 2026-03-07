@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Tecmaster - Отдел Заботы</title>
+    <title>Tecmaster - Главное меню</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -15,9 +15,9 @@
         :root {
             --bg-main: linear-gradient(180deg, #E8E8E8 0%, #C3C3C3 100%);
             --text-grad: linear-gradient(180deg, #000000 0%, #666666 100%);
-            --btn-grad-1: linear-gradient(180deg, #000000 0%, #1C1C1A 100%);
-            --btn-grad-2: linear-gradient(180deg, #000000 0%, #1C1D18 100%);
-            --accent-grad: linear-gradient(180deg, #FFD250 0%, #FFC20F 100%);
+            --btn-grad: linear-gradient(180deg, #000000 0%, #1C1C1A 100%);
+            /* ЗАМЕНА ГРАДИЕНТА НА FLAT ЦВЕТ */
+            --accent-color: #FFBE00;
         }
 
         * {
@@ -32,115 +32,141 @@
             height: 100%;
             background-color: #E8E8E8;
             font-family: 'Montserrat', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            overflow: hidden;
             display: flex;
             justify-content: center;
+            overflow: hidden;
         }
 
         .main-container {
-            width: 422px; 
-            min-width: 422px;
+            width: 422px;
             height: 100vh;
             background: var(--bg-main);
             position: relative;
-            overflow: hidden;
             flex-shrink: 0;
         }
 
+        /* Декор сверху (upbar.png) */
         .upbar {
             position: absolute;
-            width: 100%; 
+            width: 100%;
             top: 0;
             left: 0;
-            z-index: 100;
+            z-index: 10;
         }
 
-        .title {
+        /* Заголовок (ОТДЕЛ ЗАБОТЫ) */
+        .title-block {
             position: absolute;
+            top: 85px;
+            left: 31px;
+            z-index: 20;
+        }
+
+        .title-line {
             font-weight: 800;
             font-size: 48px;
             text-transform: uppercase;
             background: var(--text-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            z-index: 10;
+            margin-bottom: -5px;
         }
-        .otdel { top: 85px; left: 31px; width: 181px; }
-        .zaboty { top: 132px; left: 31px; width: 229px; }
 
-        .description {
+        /* Описание */
+        .desc-text {
             position: absolute;
             width: 197px;
             top: 191px;
-            left: 30px;
+            left: 31px;
             font-weight: 300;
             font-size: 13px;
             color: #000000;
-            z-index: 10;
+            line-height: 1.2;
+            z-index: 20;
         }
 
+        /* Фото товара (tecmasterimage_1) */
         .product-img {
             position: absolute;
             width: 143px;
             height: 215px;
             top: 84px;
-            left: 248px;
+            right: 31px;
             border-radius: 25px;
             object-fit: cover;
-            z-index: 5;
+            z-index: 15;
         }
 
-        .action-btn {
+        /* Контейнер кнопок */
+        .menu-buttons {
             position: absolute;
+            top: 319px;
+            left: 31px;
+            display: flex;
+            flex-direction: column;
+            gap: 21px; /* Расстояние между кнопками */
+            z-index: 30;
+        }
+
+        /* Большая кнопка */
+        .big-btn {
             width: 360px;
             height: 70px;
+            background: var(--btn-grad);
             border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
             box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.25);
-            z-index: 10;
-            cursor: pointer; /* Делаем курсор активным */
-        }
-        .btn-1 { top: 319px; left: 31px; background: var(--btn-grad-1); }
-        .btn-2 { top: 410px; left: 32px; background: var(--btn-grad-2); }
-
-        .accent-rect {
-            position: absolute;
-            width: 104px;
-            height: 70px;
-            background: var(--accent-grad);
-            border-radius: 25px;
-            top: 0;
-            left: 256px; 
+            transition: 0.1s;
         }
 
-        .btn-text {
-            position: absolute;
+        .big-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Небольшой эффект при наведении, т.к. цвет flat */
+        .big-btn:hover {
+            filter: brightness(0.95);
+        }
+
+        /* Текст на кнопке */
+        .big-btn-text {
+            color: #FFFFFF;
             font-weight: 600;
             font-size: 20px;
-            color: #FFFFFF;
-            z-index: 15;
-            pointer-events: none; /* Пропускает клик на кнопку снизу */
+            margin-left: 21px;
+            text-align: left;
         }
-        .text-1 { width: 192px; top: 330px; left: 52px; }
-        .text-2 { width: 138px; top: 421px; left: 52px; }
 
-        .btn-icon {
+        /* Желтая вставка внутри кнопки */
+        .btn-yellow-accent {
             position: absolute;
+            right: 0;
+            top: 0;
+            width: 104px;
+            height: 100%;
+            /* ИСПОЛЬЗУЕМ FLAT ЦВЕТ */
+            background-color: var(--accent-color);
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Иконка стрелки (button_image) */
+        .arrow-icon {
             width: 25px;
             height: 25px;
-            z-index: 20;
-            pointer-events: none;
         }
-        .icon-1 { top: 341px; left: 326px; }
-        .icon-2 { top: 432px; left: 327px; }
 
         .bottom-logo {
             position: absolute;
             width: 104px;
-            height: 45px;
-            bottom: 40px; 
+            bottom: 40px;
             left: 159px;
-            z-index: 10;
         }
     </style>
 </head>
@@ -149,23 +175,32 @@
     <main class="main-container">
         <img src="upbar.png" class="upbar">
 
-        <div class="title otdel">ОТДЕЛ</div>
-        <div class="title zaboty">ЗАБОТЫ</div>
-        <p class="description">Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.</p>
+        <div class="title-block">
+            <div class="title-line">ОТДЕЛ</div>
+            <div class="title-line">ЗАБОТЫ</div>
+        </div>
+
+        <p class="desc-text">
+            Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
+        </p>
 
         <img src="tecmasterimage_1.png" class="product-img">
 
-        <div class="action-btn btn-1" id="lottery-btn">
-            <div class="accent-rect"></div>
-        </div>
-        <div class="btn-text text-1">Беспроигрышная лотерея</div>
-        <img src="button_image.png" class="btn-icon icon-1">
+        <div class="menu-buttons">
+            <button class="big-btn" id="lottery-btn">
+                <span class="big-btn-text">Беспроигрышная<br>лотерея</span>
+                <div class="btn-yellow-accent">
+                    <img src="button_image.png" class="arrow-icon">
+                </div>
+            </button>
 
-        <div class="action-btn btn-2">
-            <div class="accent-rect"></div>
+            <button class="big-btn" id="support-link">
+                <span class="big-btn-text">С покупкой<br>что-то не так</span>
+                <div class="btn-yellow-accent">
+                    <img src="button_image.png" class="arrow-icon">
+                </div>
+            </button>
         </div>
-        <div class="btn-text text-2">С покупкой что-то не так</div>
-        <img src="button_image.png" class="btn-icon icon-2">
 
         <img src="spraystorelogo.png" class="bottom-logo">
     </main>
@@ -191,8 +226,19 @@
                 if (tg.HapticFeedback) {
                     tg.HapticFeedback.impactOccurred('medium');
                 }
-                // ТЕПЕРЬ ВЕДЕТ НА ПРОВЕРКУ
+                // Ведет на ПЕРВУЮ страницу воронки проверки
                 window.location.href = 'check.html';
+            };
+        }
+
+        const supportButton = document.getElementById('support-link');
+        if (supportButton) {
+            supportButton.onclick = function() {
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('medium');
+                }
+                // Можно добавить логику перехода в чат поддержки
+                // tg.openTelegramLink('https://t.me/tecmaster_support');
             };
         }
     </script>
