@@ -36,23 +36,20 @@
             font-family: 'Montserrat', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow: hidden;
-            /* Центрируем макет по горизонтали */
             display: flex;
             justify-content: center;
         }
 
         .main-container {
-            /* Фикс: используем фиксированную ширину, но центрируем её */
             width: 422px; 
             min-width: 422px;
             height: 100vh;
             background: var(--bg-main);
             position: relative;
             overflow: hidden;
-            flex-shrink: 0; /* Не даем флексу сжимать контейнер */
+            flex-shrink: 0;
         }
 
-        /* ТВОИ ОРИГИНАЛЬНЫЕ НАРАБОТКИ */
         .upbar {
             position: absolute;
             width: 100%; 
@@ -104,7 +101,14 @@
             border-radius: 25px;
             box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.25);
             z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s ease;
         }
+        
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
         .btn-1 { top: 319px; left: 31px; background: var(--btn-grad-1); }
         .btn-2 { top: 410px; left: 32px; background: var(--btn-grad-2); }
 
@@ -124,6 +128,7 @@
             font-size: 20px;
             color: #FFFFFF;
             z-index: 15;
+            pointer-events: none;
         }
         .text-1 { width: 192px; top: 330px; left: 52px; }
         .text-2 { width: 138px; top: 421px; left: 52px; }
@@ -133,6 +138,7 @@
             width: 25px;
             height: 25px;
             z-index: 20;
+            pointer-events: none;
         }
         .icon-1 { top: 341px; left: 326px; }
         .icon-2 { top: 432px; left: 327px; }
@@ -160,11 +166,15 @@
 
         <img src="tecmasterimage_1.png" alt="Product" class="product-img">
 
-        <div class="action-btn btn-1"><div class="accent-rect"></div></div>
+        <div class="action-btn btn-1" id="lottery-btn">
+            <div class="accent-rect"></div>
+        </div>
         <div class="btn-text text-1">Беспроигрышная лотерея</div>
         <img src="button_image.png" class="btn-icon icon-1">
 
-        <div class="action-btn btn-2"><div class="accent-rect"></div></div>
+        <div class="action-btn btn-2">
+            <div class="accent-rect"></div>
+        </div>
         <div class="btn-text text-2">С покупкой что-то не так</div>
         <img src="button_image.png" class="btn-icon icon-2">
 
@@ -179,6 +189,16 @@
         
         tg.setHeaderColor('#E8E8E8');
         tg.setBackgroundColor('#E8E8E8');
+
+        // Логика перехода на roulette.html
+        document.getElementById('lottery-btn').addEventListener('click', function() {
+            // Виброотклик для TMA
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
+            }
+            // Перенаправление
+            window.location.href = 'roulette.html';
+        });
     </script>
 </body>
 </html>
