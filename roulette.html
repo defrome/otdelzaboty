@@ -203,20 +203,56 @@
 
     <script>
         const tg = window.Telegram.WebApp;
+        
+        // Инициализация интерфейса
         tg.ready();
         tg.expand();
         tg.setHeaderColor('#E8E8E8');
         tg.setBackgroundColor('#E8E8E8');
 
+        // --- ЛОГИКА КНОПКИ НАЗАД ---
+        tg.BackButton.show(); // Показываем кнопку в верхней панели
+        tg.BackButton.onClick(() => {
+            // Перед переходом скрываем кнопку (хороший тон)
+            tg.BackButton.hide();
+            // Укажите имя вашего главного файла (index.html или main.html)
+            window.location.href = 'main.html'; 
+        });
+
+        // --- ЛОГИКА РУЛЕТКИ ---
         const wheel = document.getElementById('wheel');
         const btn = document.getElementById('spin_btn');
         let currentRotation = 0;
+        let isSpinning = false;
 
         btn.addEventListener('click', () => {
+            if (isSpinning) return; // Не даем крутить, пока идет анимация
+
+            isSpinning = true;
+            btn.style.opacity = "0.5"; // Визуально отключаем кнопку
+            btn.style.pointerEvents = "none";
+
+            // Виброотклик
             tg.HapticFeedback.impactOccurred('heavy');
+
+            // Рассчитываем вращение (минимум 5 полных оборотов + рандом)
             const randomDegree = Math.floor(Math.random() * 360) + 1800;
             currentRotation += randomDegree;
+            
             wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            // После завершения анимации (4 секунды, как в CSS)
+            setTimeout(() => {
+                isSpinning = false;
+                tg.HapticFeedback.notificationOccurred('success');
+                
+                // Вычисляем, какой сектор выпал (опционально)
+                const actualDegree = currentRotation % 360;
+                console.log("Остановилось на градусе:", actualDegree);
+                
+                // Здесь можно вывести Alert с выигрышем
+                // tg.showAlert("Поздравляем! Ваша скидка сохранена.");
+            }, 4000);
         });
     </script>
 </body>
