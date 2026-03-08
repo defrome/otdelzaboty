@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Tecmaster - Р СѓР»РµС‚РєР°</title>
+    <title>Tecmaster - Рулетка</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -43,7 +43,7 @@
             flex-shrink: 0;
         }
 
-        /* Р—РђР“РћР›РћР’РћРљ */
+        /* ЗАГОЛОВОК */
         .title-roulette {
             position: absolute;
             width: 359px;
@@ -58,7 +58,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* РџРћР”Р—РђР“РћР›РћР’РћРљ */
+        /* ПОДЗАГОЛОВОК */
         .subtitle-roulette {
             position: absolute;
             width: 212px;
@@ -70,7 +70,7 @@
             color: #000000;
         }
 
-        /* РЎРўР Р•Р›РљРђ: Polygon 1 (image_2768c0.png) */
+        /* СТРЕЛКА: Polygon 1 (image_2768c0.png) */
         .polygon-1 {
             position: absolute;
             width: 22px;
@@ -78,13 +78,13 @@
             top: 122px;
             left: 200px;
             background-color: #EA0000;
-            /* РЎРѕР·РґР°РµРј С„РѕСЂРјСѓ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР° С‡РµСЂРµР· clip-path */
+            /* Создаем форму треугольника через clip-path */
             clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
             z-index: 5;
-            /* Rotation -180В° РІ Figma РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РѕСЃС‚СЂРёРµ СЃРјРѕС‚СЂРёС‚ РІРЅРёР· */
+            /* Rotation -180° в Figma означает, что острие смотрит вниз */
         }
 
-        /* ELLIPSE 1: Р‘Р°СЂР°Р±Р°РЅ */
+        /* ELLIPSE 1: Барабан */
         .ellipse-1 {
             position: absolute;
             width: 301px;
@@ -98,7 +98,7 @@
             overflow: hidden;
         }
 
-        /* Р›РРќРР */
+        /* ЛН */
         .line {
             position: absolute;
             width: 301px;
@@ -113,7 +113,7 @@
         .line-3 { border-color: #FAC303; transform: rotate(45deg); }
         .line-4 { border-color: #FCC300; transform: rotate(135deg); }
 
-        /* РџР РР—Р« */
+        /* ПРЗЫ */
         .prize-text {
             position: absolute;
             width: 100px;
@@ -135,7 +135,7 @@
         .p7 { transform: rotate(292.5deg); }
         .p8 { transform: rotate(337.5deg); }
 
-        /* РљРќРћРџРљРђ: Rectangle 3 */
+        /* КНОПКА: Rectangle 3 */
         .rectangle-3 {
             position: absolute;
             width: 176px;
@@ -173,8 +173,8 @@
 <body>
 
     <main class="main-container">
-        <div class="title-roulette">РљР РЈРўР Р РЈР›Р•РўРљРЈ</div>
-        <div class="subtitle-roulette">Р РІС‹Р±РёРІР°Р№ Р»СѓС‡С€РёРµ СЃРєРёРґРєРё!</div>
+        <div class="title-roulette">КРУТ РУЛЕТКУ</div>
+        <div class="subtitle-roulette"> выбивай лучшие скидки!</div>
 
         <div class="polygon-1"></div>
 
@@ -195,7 +195,7 @@
         </div>
 
         <button class="rectangle-3" id="spin_btn">
-            <span class="btn-text-spin">РљР РЈРўРРўР¬</span>
+            <span class="btn-text-spin">КРУТТЬ</span>
         </button>
 
         <img src="../assets/images/spraystorelogo.png" class="bottom-logo">
@@ -204,54 +204,54 @@
     <script>
         const tg = window.Telegram.WebApp;
         
-        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР°
+        // нициализация интерфейса
         tg.ready();
         tg.expand();
         tg.setHeaderColor('#E8E8E8');
         tg.setBackgroundColor('#E8E8E8');
 
-        // --- Р›РћР“РРљРђ РљРќРћРџРљР РќРђР—РђР” ---
-        tg.BackButton.show(); // РџРѕРєР°Р·С‹РІР°РµРј РєРЅРѕРїРєСѓ РІ РІРµСЂС…РЅРµР№ РїР°РЅРµР»Рё
+        // --- ЛОГКА КНОПК НАЗАД ---
+        tg.BackButton.show(); // Показываем кнопку в верхней панели
         tg.BackButton.onClick(() => {
-            // РџРµСЂРµРґ РїРµСЂРµС…РѕРґРѕРј СЃРєСЂС‹РІР°РµРј РєРЅРѕРїРєСѓ (С…РѕСЂРѕС€РёР№ С‚РѕРЅ)
+            // Перед переходом скрываем кнопку (хороший тон)
             tg.BackButton.hide();
-            // РЈРєР°Р¶РёС‚Рµ РёРјСЏ РІР°С€РµРіРѕ РіР»Р°РІРЅРѕРіРѕ С„Р°Р№Р»Р° (index.html РёР»Рё main.html)
+            // Укажите имя вашего главного файла (index.html или main.html)
             window.location.href = '../index.html'; 
         });
 
-        // --- Р›РћР“РРљРђ Р РЈР›Р•РўРљР ---
+        // --- ЛОГКА РУЛЕТК ---
         const wheel = document.getElementById('wheel');
         const btn = document.getElementById('spin_btn');
         let currentRotation = 0;
         let isSpinning = false;
 
         btn.addEventListener('click', () => {
-            if (isSpinning) return; // РќРµ РґР°РµРј РєСЂСѓС‚РёС‚СЊ, РїРѕРєР° РёРґРµС‚ Р°РЅРёРјР°С†РёСЏ
+            if (isSpinning) return; // Не даем крутить, пока идет анимация
 
             isSpinning = true;
-            btn.style.opacity = "0.5"; // Р’РёР·СѓР°Р»СЊРЅРѕ РѕС‚РєР»СЋС‡Р°РµРј РєРЅРѕРїРєСѓ
+            btn.style.opacity = "0.5"; // Визуально отключаем кнопку
             btn.style.pointerEvents = "none";
 
-            // Р’РёР±СЂРѕРѕС‚РєР»РёРє
+            // Виброотклик
             tg.HapticFeedback.impactOccurred('heavy');
 
-            // Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј РІСЂР°С‰РµРЅРёРµ (РјРёРЅРёРјСѓРј 5 РїРѕР»РЅС‹С… РѕР±РѕСЂРѕС‚РѕРІ + СЂР°РЅРґРѕРј)
+            // Рассчитываем вращение (минимум 5 полных оборотов + рандом)
             const randomDegree = Math.floor(Math.random() * 360) + 1800;
             currentRotation += randomDegree;
             
             wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-            // РџРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё (4 СЃРµРєСѓРЅРґС‹, РєР°Рє РІ CSS)
+            // После завершения анимации (4 секунды, как в CSS)
             setTimeout(() => {
                 isSpinning = false;
                 tg.HapticFeedback.notificationOccurred('success');
                 
-                // Р’С‹С‡РёСЃР»СЏРµРј, РєР°РєРѕР№ СЃРµРєС‚РѕСЂ РІС‹РїР°Р» (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
+                // Вычисляем, какой сектор выпал (опционально)
                 const actualDegree = currentRotation % 360;
-                console.log("РћСЃС‚Р°РЅРѕРІРёР»РѕСЃСЊ РЅР° РіСЂР°РґСѓСЃРµ:", actualDegree);
+                console.log("Остановилось на градусе:", actualDegree);
                 
-                // Р—РґРµСЃСЊ РјРѕР¶РЅРѕ РІС‹РІРµСЃС‚Рё Alert СЃ РІС‹РёРіСЂС‹С€РµРј
-                // tg.showAlert("РџРѕР·РґСЂР°РІР»СЏРµРј! Р’Р°С€Р° СЃРєРёРґРєР° СЃРѕС…СЂР°РЅРµРЅР°.");
+                // Здесь можно вывести Alert с выигрышем
+                // tg.showAlert("Поздравляем! Ваша скидка сохранена.");
             }, 4000);
         });
     </script>

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Tecmaster - Р“Р»Р°РІРЅРѕРµ РјРµРЅСЋ</title>
+    <title>Tecmaster - Главное меню</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -33,7 +33,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* РћСЃРЅРѕРІРЅРѕР№ СЃРєСЂРѕР»Р»-РєРѕРЅС‚РµР№РЅРµСЂ */
+        /* Основной скролл-контейнер */
         .main-container {
             width: 100%;
             max-width: 422px;
@@ -44,25 +44,25 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            padding-bottom: 30px; /* РћС‚СЃС‚СѓРї РїРѕРґ Р»РѕРіРѕС‚РёРїРѕРј */
+            padding-bottom: 30px; /* Отступ под логотипом */
             overflow-x: hidden;
         }
 
-        /* Р”РµРєРѕСЂ СЃРІРµСЂС…Сѓ */
+        /* Декор сверху */
         .upbar {
             width: 100%;
             height: auto;
             flex-shrink: 0;
         }
 
-        /* РљРѕРЅС‚РµРЅС‚РЅР°СЏ С‡Р°СЃС‚СЊ (Р—Р°РіРѕР»РѕРІРѕРє + РћРїРёСЃР°РЅРёРµ + Р¤РѕС‚Рѕ) */
+        /* Контентная часть (Заголовок + Описание + Фото) */
         .hero-section {
             width: 100%;
             padding: 20px 31px;
             display: grid;
-            grid-template-columns: 1fr 143px; /* РўРµРєСЃС‚ СЃР»РµРІР°, С„РѕС‚Рѕ СЃРїСЂР°РІР° */
+            grid-template-columns: 1fr 143px; /* Текст слева, фото справа */
             gap: 15px;
-            margin-top: -20px; /* РќРµРјРЅРѕРіРѕ Р·Р°С…РѕРґРёРј РїРѕРґ upbar РґР»СЏ РєСЂР°СЃРѕС‚С‹ */
+            margin-top: -20px; /* Немного заходим под upbar для красоты */
         }
 
         .title-line {
@@ -92,7 +92,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* РљРѕРЅС‚РµР№РЅРµСЂ РєРЅРѕРїРѕРє */
+        /* Контейнер кнопок */
         .menu-buttons {
             width: 100%;
             padding: 30px 31px;
@@ -114,7 +114,7 @@
             align-items: center;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
             transition: transform 0.1s;
-            overflow: hidden; /* Р§С‚РѕР±С‹ Р¶РµР»С‚Р°СЏ РІСЃС‚Р°РІРєР° РЅРµ РІС‹Р»РµР·Р°Р»Р° */
+            overflow: hidden; /* Чтобы желтая вставка не вылезала */
         }
 
         .big-btn:active { transform: scale(0.98); }
@@ -132,7 +132,7 @@
             position: absolute;
             right: 0;
             top: 0;
-            width: 80px; /* Р§СѓС‚СЊ СѓРјРµРЅСЊС€РёР» РґР»СЏ Р°РґР°РїС‚РёРІРЅРѕСЃС‚Рё */
+            width: 80px; /* Чуть уменьшил для адаптивности */
             height: 100%;
             background-color: var(--accent-color);
             display: flex;
@@ -146,7 +146,7 @@
             height: 20px;
         }
 
-        /* РџСЂРѕСЃР»РѕР№РєР°, РІС‹С‚Р°Р»РєРёРІР°СЋС‰Р°СЏ Р»РѕРіРѕ РІРЅРёР· */
+        /* Прослойка, выталкивающая лого вниз */
         .spacer {
             flex-grow: 1;
             min-height: 40px;
@@ -166,10 +166,10 @@
 
         <section class="hero-section">
             <div class="text-side">
-                <span class="title-line">РћРўР”Р•Р›</span>
-                <span class="title-line">Р—РђР‘РћРўР«</span>
+                <span class="title-line">ОТДЕЛ</span>
+                <span class="title-line">ЗАБОТЫ</span>
                 <p class="desc-text">
-                    РњРЅРѕРіРѕС„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Рµ СЌР»РµРєС‚СЂРёС‡РµСЃРєРёРµ СЂР°СЃРїС‹Р»РёС‚РµР»Рё РґР»СЏ РёРЅС‚РµСЂСЊРµСЂРЅС‹С… РєСЂР°СЃРѕРє, СЌРјР°Р»РµР№, РїСЂРѕРїРёС‚РѕРє РґР»СЏ РґРµСЂРµРІР° Рё РґСЂСѓРіРёС… РјР°С‚РµСЂРёР°Р»РѕРІ.
+                    Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
                 </p>
             </div>
             <img src="assets/images/tecmasterimage_1.png" class="product-img">
@@ -177,14 +177,14 @@
 
         <div class="menu-buttons">
             <button class="big-btn" id="lottery-btn">
-                <span class="big-btn-text">Р‘РµСЃРїСЂРѕРёРіСЂС‹С€РЅР°СЏ<br>Р»РѕС‚РµСЂРµСЏ</span>
+                <span class="big-btn-text">Беспроигрышная<br>лотерея</span>
                 <div class="btn-yellow-accent">
                     <img src="assets/images/button_image.png" class="arrow-icon">
                 </div>
             </button>
 
             <button class="big-btn" id="support-link">
-                <span class="big-btn-text">РЎ РїРѕРєСѓРїРєРѕР№<br>С‡С‚Рѕ-С‚Рѕ РЅРµ С‚Р°Рє</span>
+                <span class="big-btn-text">С покупкой<br>что-то не так</span>
                 <div class="btn-yellow-accent">
                     <img src="assets/images/button_image.png" class="arrow-icon">
                 </div>
@@ -208,7 +208,7 @@
             tg.setHeaderColor('#E8E8E8');
             tg.setBackgroundColor('#E8E8E8');
         } catch (e) {
-            console.warn("Telegram WebApp API РЅРµ РЅР°Р№РґРµРЅРѕ");
+            console.warn("Telegram WebApp API не найдено");
         }
 
         document.getElementById('lottery-btn').onclick = function() {

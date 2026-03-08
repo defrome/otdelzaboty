@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>РЁР°Рі 3 - РћС‚Р·С‹РІ</title>
+    <title>Шаг 3 - Отзыв</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
     <style>
@@ -122,7 +122,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="main-title">РћРўР”Р•Р› Р—РђР‘РћРўР«</h1>
+        <h1 class="main-title">ОТДЕЛ ЗАБОТЫ</h1>
         
         <div class="dot-row">
             <div class="dot"></div>
@@ -132,13 +132,13 @@
         </div>
 
         <div class="yellow-card">
-            <p class="question">РџСЂРёРєСЂРµРїРёС‚Рµ СЃРєСЂРёРЅС€РѕС‚ РѕС‚Р·С‹РІР°:</p>
-            <div class="upload-btn" onclick="document.getElementById('f').click()" id="upText">Р’Р«Р‘Р РђРўР¬ РЎРљР РРќРЁРћРў</div>
+            <p class="question">Прикрепите скриншот отзыва:</p>
+            <div class="upload-btn" onclick="document.getElementById('f').click()" id="upText">ВЫБРАТЬ СКРНШОТ</div>
             <input type="file" id="f" style="display:none" onchange="fileSelected()">
         </div>
 
         <button class="action-btn" onclick="goNext()">
-            <span class="btn-text">Р”РђР›Р•Р•</span>
+            <span class="btn-text">ДАЛЕЕ</span>
         </button>
 
         <img src="../assets/images/spraystorelogo.png" class="bottom-logo">
@@ -161,21 +161,21 @@
             const input = document.getElementById('f');
             const btn = document.getElementById('upText');
             if (input.files && input.files[0]) {
-                btn.innerText = 'Р¤РђР™Р› Р’Р«Р‘Р РђРќ';
-                btn.style.background = '#22c55e'; // Р—РµР»РµРЅС‹Р№ С†РІРµС‚ РґР»СЏ РёРЅРґРёРєР°С†РёРё СѓСЃРїРµС…Р°
+                btn.innerText = 'ФАЙЛ ВЫБРАН';
+                btn.style.background = '#22c55e'; // Зеленый цвет для индикации успеха
             }
         }
 
         function goNext() {
             if(!document.getElementById('f').files[0]) {
-                tg.showAlert("РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІС‹Р±РµСЂРёС‚Рµ СЃРєСЂРёРЅС€РѕС‚ РІР°С€РµРіРѕ РѕС‚Р·С‹РІР°!");
+                tg.showAlert("Пожалуйста, выберите скриншот вашего отзыва!");
                 return;
             }
             tg.HapticFeedback.impactOccurred('medium');
             window.location.href = 'step4.html';
         }
 
-        // Р‘Р»РѕРєРёСЂРѕРІРєР° Р»РёС€РЅРёС… СЃРІР°Р№РїРѕРІ
+        // Блокировка лишних свайпов
         document.body.addEventListener('touchmove', function(e) {
             if (e.target.tagName !== 'INPUT') e.preventDefault();
         }, { passive: false });
