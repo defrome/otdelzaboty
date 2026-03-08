@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Шаг 4 - Фото товара</title>
+    <title>РЁР°Рі 4 - Р¤РѕС‚Рѕ С‚РѕРІР°СЂР°</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
     <style>
@@ -122,7 +122,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="main-title">ОТДЕЛ ЗАБОТЫ</h1>
+        <h1 class="main-title">РћРўР”Р•Р› Р—РђР‘РћРўР«</h1>
         
         <div class="dot-row">
             <div class="dot"></div>
@@ -132,16 +132,16 @@
         </div>
 
         <div class="yellow-card">
-            <p class="question">Прикрепите фото самого товара:</p>
-            <div class="upload-btn" onclick="document.getElementById('f').click()" id="ut">СДЕЛАТЬ ФОТО</div>
+            <p class="question">РџСЂРёРєСЂРµРїРёС‚Рµ С„РѕС‚Рѕ СЃР°РјРѕРіРѕ С‚РѕРІР°СЂР°:</p>
+            <div class="upload-btn" onclick="document.getElementById('f').click()" id="ut">РЎР”Р•Р›РђРўР¬ Р¤РћРўРћ</div>
             <input type="file" id="f" accept="image/*" capture="camera" style="display:none" onchange="fileReady()">
         </div>
 
         <button class="action-btn" onclick="finish()">
-            <span class="btn-text">ЗАВЕРШИТЬ</span>
+            <span class="btn-text">Р—РђР’Р•Р РЁРРўР¬</span>
         </button>
 
-        <img src="spraystorelogo.png" class="bottom-logo">
+        <img src="../assets/images/spraystorelogo.png" class="bottom-logo">
     </div>
 
     <script>
@@ -161,15 +161,15 @@
             const input = document.getElementById('f');
             const btn = document.getElementById('ut');
             if (input.files && input.files[0]) {
-                btn.innerText = 'ГОТОВО';
-                btn.style.background = '#22c55e'; // Индикация успеха
+                btn.innerText = 'Р“РћРўРћР’Рћ';
+                btn.style.background = '#22c55e'; // РРЅРґРёРєР°С†РёСЏ СѓСЃРїРµС…Р°
             }
         }
 
         function finish() {
             const input = document.getElementById('f');
             if(!input.files[0]) {
-                tg.showAlert("Пожалуйста, сделайте фото товара для завершения проверки!");
+                tg.showAlert("РџРѕР¶Р°Р»СѓР№СЃС‚Р°, СЃРґРµР»Р°Р№С‚Рµ С„РѕС‚Рѕ С‚РѕРІР°СЂР° РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РїСЂРѕРІРµСЂРєРё!");
                 return;
             }
 
@@ -177,14 +177,15 @@
                 tg.HapticFeedback.notificationOccurred('success');
             }
             
-            // Финальный переход на рулетку
+            // Р¤РёРЅР°Р»СЊРЅС‹Р№ РїРµСЂРµС…РѕРґ РЅР° СЂСѓР»РµС‚РєСѓ
             window.location.href = 'roulette.html';
         }
 
-        // Блокировка лишних движений экрана
+        // Р‘Р»РѕРєРёСЂРѕРІРєР° Р»РёС€РЅРёС… РґРІРёР¶РµРЅРёР№ СЌРєСЂР°РЅР°
         document.body.addEventListener('touchmove', function(e) {
             if (e.target.tagName !== 'INPUT') e.preventDefault();
         }, { passive: false });
     </script>
 </body>
 </html>
+
