@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>РЁР°Рі 2 - Р—Р°РєР°Р·</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --accent-yellow: #FFBE00; 
+            --black-grad: linear-gradient(180deg, #000000 0%, #1C1C1A 100%); 
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html { 
+            width: 100%; 
+            height: 100%; 
+            background: #FFFFFF; 
+            font-family: 'Montserrat', sans-serif; 
+            /* Р Р°Р·СЂРµС€Р°РµРј СЃРєСЂРѕР»Р», РµСЃР»Рё РєР»Р°РІРёР°С‚СѓСЂР° СЃСЉРµСЃС‚ РјРµСЃС‚Рѕ */
+            overflow-x: hidden;
+            overflow-y: auto; 
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 500px; 
+            min-height: 100%; /* Р—Р°РЅРёРјР°РµС‚ РІСЃСЋ РІС‹СЃРѕС‚Сѓ */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 20px 40px 20px; /* РћС‚СЃС‚СѓРї СЃРЅРёР·Сѓ РґР»СЏ Р»РѕРіРѕС‚РёРїР° */
+        }
+
+        .main-title { 
+            margin-top: 10px;
+            font-weight: 800; 
+            font-size: clamp(24px, 8vw, 32px); 
+            text-align: center; 
+            text-transform: uppercase; 
+            background: linear-gradient(180deg, #000000 0%, #666666 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            flex-shrink: 0;
+        }
+
+        .dot-row { 
+            margin-top: 20px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px; 
+            flex-shrink: 0;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #212121; }
+        .dot.active { width: 16px; height: 16px; background: var(--accent-yellow); }
+
+        .yellow-card { 
+            width: 100%; 
+            max-width: 380px;
+            min-height: 210px; 
+            margin-top: 30px;
+            background: var(--accent-yellow); 
+            border-radius: 25px; 
+            padding: 30px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .question { font-weight: 600; font-size: 16px; color: #000; text-align: center; }
+
+        .order-input { 
+            width: 100%; 
+            height: 55px; 
+            background: rgba(255,255,255,0.5); 
+            border: 2px solid #000; 
+            border-radius: 15px; 
+            padding: 0 15px; 
+            font-size: 18px; 
+            font-weight: 600; 
+            text-align: center; 
+            outline: none; 
+            appearance: none;
+        }
+
+        .action-btn { 
+            margin-top: 40px;
+            width: 180px; 
+            height: 48px; 
+            background: var(--black-grad); 
+            border-radius: 25px; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            flex-shrink: 0;
+        }
+        
+        .action-btn:active { transform: scale(0.96); }
+        .btn-text { color: #FFF; font-weight: 800; font-size: 18px; text-transform: uppercase; }
+
+        /* РџСЂРѕСЃР»РѕР№РєР°, РєРѕС‚РѕСЂР°СЏ РІС‹С‚Р°Р»РєРёРІР°РµС‚ Р»РѕРіРѕС‚РёРї РІРЅРёР· */
+        .spacer {
+            flex-grow: 1;
+            min-height: 20px;
+        }
+
+        .bottom-logo { 
+            width: 110px;
+            height: auto;
+            flex-shrink: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* РљР»Р°СЃСЃ РґР»СЏ СЃРєСЂС‹С‚РёСЏ Р»РѕРіРѕС‚РёРїР° */
+        .hidden-logo {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <h1 class="main-title">РћРўР”Р•Р› Р—РђР‘РћРўР«</h1>
+        
+        <div class="dot-row">
+            <div class="dot"></div>
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="yellow-card">
+            <p class="question">Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р·Р°РєР°Р·Р°:</p>
+            <input type="text" class="order-input" placeholder="0000000000" id="orderNum" inputmode="numeric">
+        </div>
+
+        <button class="action-btn" onclick="checkOrder()">
+            <span class="btn-text">РџР РћР’Р•Р РРўР¬</span>
+        </button>
+
+        <div class="spacer"></div>
+
+        <img src="spraystorelogo.png" class="bottom-logo" id="bottomLogo">
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp; 
+        tg.ready(); 
+        tg.expand(); 
+        
+        tg.setHeaderColor('#FFFFFF');
+        tg.setBackgroundColor('#FFFFFF');
+
+        const orderInput = document.getElementById('orderNum');
+        const bottomLogo = document.getElementById('bottomLogo');
+
+        // РЎРєСЂС‹РІР°РµРј Р»РѕРіРѕС‚РёРї РїСЂРё РЅР°Р±РѕСЂРµ С‚РµРєСЃС‚Р°, С‡С‚РѕР±С‹ РЅРµ РјРµС€Р°Р»СЃСЏ
+        orderInput.addEventListener('focus', () => {
+            bottomLogo.classList.add('hidden-logo');
+        });
+
+        orderInput.addEventListener('blur', () => {
+            bottomLogo.classList.remove('hidden-logo');
+        });
+
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => { 
+            window.location.href = '../index.html'; 
+        });
+
+        function checkOrder() {
+            const val = orderInput.value;
+            if(val.length < 5) {
+                tg.showAlert("Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅС‹Р№ РЅРѕРјРµСЂ Р·Р°РєР°Р·Р°!");
+                return;
+            }
+            tg.HapticFeedback.notificationOccurred('success');
+            window.location.href = 'step3.html';
+        }
+
+        // Р—Р°РєСЂС‹С‚РёРµ РєР»Р°РІРёР°С‚СѓСЂС‹ РїСЂРё РєР»РёРєРµ РЅР° РїСѓСЃС‚СѓСЋ РѕР±Р»Р°СЃС‚СЊ
+        document.getElementById('mainContainer').addEventListener('click', (e) => {
+            if (e.target !== orderInput) {
+                orderInput.blur();
+            }
+        });
+    </script>
+</body>
+</html>
+
