@@ -134,7 +134,7 @@
         <div class="yellow-card">
             <p class="question">Прикрепите скриншот отзыва:</p>
             <div class="upload-btn" onclick="document.getElementById('f').click()" id="upText">ВЫБРАТЬ СКРНШОТ</div>
-            <input type="file" id="f" style="display:none" onchange="fileSelected()">
+            <input type="file" id="f" accept="image/*" style="display:none" onchange="fileSelected()">
         </div>
 
         <button class="action-btn" onclick="goNext()">
@@ -146,6 +146,7 @@
 
     <script>
         const tg = window.Telegram.WebApp; 
+        const API_BASE = sessionStorage.getItem('api_base') || window.__API_BASE__ || 'http://127.0.0.1:8000/api/v1';
         tg.ready();
         tg.expand();
 
@@ -166,13 +167,34 @@
             }
         }
 
-        function goNext() {
-            if(!document.getElementById('f').files[0]) {
+        async function goNext() {
+            const fileInput = document.getElementById('f');
+            if(!fileInput.files[0]) {
                 tg.showAlert("Пожалуйста, выберите скриншот вашего отзыва!");
                 return;
             }
-            tg.HapticFeedback.impactOccurred('medium');
-            window.location.href = 'step4.html';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                const response = await fetch(`${API_BASE}/applications/upload/review`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const payload = await response.json();
+                sessionStorage.setItem('review_path', payload.path);
+                tg.HapticFeedback.impactOccurred('medium');
+                window.location.href = 'step4.html';
+            } catch (error) {
+                console.error(error);
+                tg.showAlert("Не удалось загрузить файл. Повторите попытку.");
+            }
         }
 
         // Блокировка лишних свайпов
@@ -182,4 +204,3 @@
     </script>
 </body>
 </html>
-

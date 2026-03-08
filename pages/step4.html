@@ -146,6 +146,7 @@
 
     <script>
         const tg = window.Telegram.WebApp; 
+        const API_BASE = sessionStorage.getItem('api_base') || window.__API_BASE__ || 'http://127.0.0.1:8000/api/v1';
         tg.ready();
         tg.expand();
 
@@ -166,19 +167,55 @@
             }
         }
 
-        function finish() {
+        async function finish() {
             const input = document.getElementById('f');
             if(!input.files[0]) {
                 tg.showAlert("Пожалуйста, сделайте фото товара для завершения проверки!");
                 return;
             }
 
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.notificationOccurred('success');
+            const applicationId = sessionStorage.getItem('application_id');
+            const reviewPath = sessionStorage.getItem('review_path');
+            if (!applicationId || !reviewPath) {
+                tg.showAlert("Данные заявки не найдены. Начните заново.");
+                window.location.href = 'check.html';
+                return;
             }
-            
-            // Финальный переход на рулетку
-            window.location.href = 'roulette.html';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', input.files[0]);
+                const uploadRes = await fetch(`${API_BASE}/applications/upload/product`, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (!uploadRes.ok) {
+                    throw new Error(`Upload HTTP ${uploadRes.status}`);
+                }
+                const uploadPayload = await uploadRes.json();
+                const productPath = uploadPayload.path;
+
+                const submitRes = await fetch(`${API_BASE}/applications/${applicationId}/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        review_screenshot_path: reviewPath,
+                        product_photo_path: productPath
+                    })
+                });
+                if (!submitRes.ok) {
+                    throw new Error(`Submit HTTP ${submitRes.status}`);
+                }
+
+                sessionStorage.setItem('product_path', productPath);
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+                window.location.href = 'roulette.html';
+            } catch (error) {
+                console.error(error);
+                tg.showAlert("Ошибка отправки. Повторите попытку.");
+            }
         }
 
         // Блокировка лишних движений экрана
@@ -188,4 +225,3 @@
     </script>
 </body>
 </html>
-

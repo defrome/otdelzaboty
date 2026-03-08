@@ -164,6 +164,7 @@
 
     <script>
         const tg = window.Telegram.WebApp; 
+        const API_BASE = sessionStorage.getItem('api_base') || window.__API_BASE__ || 'http://127.0.0.1:8000/api/v1';
         tg.ready(); 
         tg.expand(); 
         
@@ -187,14 +188,46 @@
             window.location.href = '../index.html'; 
         });
 
-        function checkOrder() {
+        async function checkOrder() {
             const val = orderInput.value;
             if(val.length < 5) {
                 tg.showAlert("Введите корректный номер заказа!");
                 return;
             }
-            tg.HapticFeedback.notificationOccurred('success');
-            window.location.href = 'step3.html';
+
+            const marketplace = sessionStorage.getItem('marketplace');
+            if (!marketplace) {
+                tg.showAlert("Сначала выберите маркетплейс");
+                window.location.href = 'check.html';
+                return;
+            }
+
+            try {
+                const tgUser = tg.initDataUnsafe?.user?.id || null;
+                const response = await fetch(`${API_BASE}/applications`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        marketplace,
+                        order_number: val,
+                        telegram_user_id: tgUser
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const payload = await response.json();
+                sessionStorage.setItem('application_id', payload.id);
+                sessionStorage.setItem('order_number', val);
+
+                tg.HapticFeedback.notificationOccurred('success');
+                window.location.href = 'step3.html';
+            } catch (error) {
+                console.error(error);
+                tg.showAlert("Ошибка сервера. Попробуйте еще раз.");
+            }
         }
 
         // Закрытие клавиатуры при клике на пустую область
@@ -206,6 +239,5 @@
     </script>
 </body>
 </html>
-
 
 

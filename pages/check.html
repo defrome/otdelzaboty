@@ -33,12 +33,12 @@
         <div class="yellow-card">
             <p class="question">Где вы совершили покупку?</p>
             <div class="market-grid">
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/wb_logo.png"></button>
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/ozon_logo.png"></button>
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/yandex_logo.png"></button>
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/lemana_logo.png"></button>
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/bau_logo.png"></button>
-                <button class="m-btn" onclick="selectMarket(this)"><img src="../assets/images/petr_logo.png"></button>
+                <button class="m-btn" data-market="wb" onclick="selectMarket(this)"><img src="../assets/images/wb_logo.png"></button>
+                <button class="m-btn" data-market="ozon" onclick="selectMarket(this)"><img src="../assets/images/ozon_logo.png"></button>
+                <button class="m-btn" data-market="yandex" onclick="selectMarket(this)"><img src="../assets/images/yandex_logo.png"></button>
+                <button class="m-btn" data-market="lemana" onclick="selectMarket(this)"><img src="../assets/images/lemana_logo.png"></button>
+                <button class="m-btn" data-market="bau" onclick="selectMarket(this)"><img src="../assets/images/bau_logo.png"></button>
+                <button class="m-btn" data-market="petr" onclick="selectMarket(this)"><img src="../assets/images/petr_logo.png"></button>
             </div>
         </div>
         <button class="action-btn" onclick="goNext()">
@@ -48,12 +48,31 @@
     </div>
     <script>
         const tg = window.Telegram.WebApp; tg.ready();
+        const API_BASE = window.__API_BASE__ || 'http://127.0.0.1:8000/api/v1';
+        let selectedMarketplace = sessionStorage.getItem('marketplace');
+
+        if (selectedMarketplace) {
+            const selected = document.querySelector(`.m-btn[data-market="${selectedMarketplace}"]`);
+            if (selected) {
+                selected.classList.add('selected');
+            }
+        }
+
         function selectMarket(btn) {
             document.querySelectorAll('.m-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
+            selectedMarketplace = btn.dataset.market || null;
+            if (selectedMarketplace) {
+                sessionStorage.setItem('marketplace', selectedMarketplace);
+            }
             tg.HapticFeedback.impactOccurred('light');
         }
         function goNext() {
+            if (!selectedMarketplace) {
+                tg.showAlert("Выберите маркетплейс");
+                return;
+            }
+            sessionStorage.setItem('api_base', API_BASE);
             tg.HapticFeedback.impactOccurred('medium');
             window.location.href = 'step2.html';
         }

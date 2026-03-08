@@ -203,6 +203,8 @@
 
     <script>
         const tg = window.Telegram.WebApp;
+        const API_BASE = sessionStorage.getItem('api_base') || window.__API_BASE__ || 'http://127.0.0.1:8000/api/v1';
+        const DISCOUNTS = [5, 10, 15, 20, 25, 30, 50, 100];
         
         // нициализация интерфейса
         tg.ready();
@@ -225,7 +227,7 @@
         let currentRotation = 0;
         let isSpinning = false;
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             if (isSpinning) return; // Не даем крутить, пока идет анимация
 
             isSpinning = true;
@@ -235,28 +237,44 @@
             // Виброотклик
             tg.HapticFeedback.impactOccurred('heavy');
 
-            // Рассчитываем вращение (минимум 5 полных оборотов + рандом)
-            const randomDegree = Math.floor(Math.random() * 360) + 1800;
-            currentRotation += randomDegree;
-            
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
+            try {
+                const applicationId = sessionStorage.getItem('application_id');
+                const response = await fetch(`${API_BASE}/roulette/spin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ application_id: applicationId })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
 
-            // После завершения анимации (4 секунды, как в CSS)
-            setTimeout(() => {
+                const payload = await response.json();
+                const discount = payload.discount_percent;
+                const index = DISCOUNTS.indexOf(discount);
+                const sectorCenter = 22.5 + (index < 0 ? 0 : index * 45);
+                const targetOffset = (360 - sectorCenter) % 360;
+                const turnDegree = 1800 + targetOffset;
+                currentRotation += turnDegree;
+
+                wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+                setTimeout(() => {
+                    isSpinning = false;
+                    tg.HapticFeedback.notificationOccurred('success');
+                    tg.showAlert(`Ваша скидка: ${discount}%`);
+                    btn.style.opacity = "1";
+                    btn.style.pointerEvents = "auto";
+                }, 4000);
+            } catch (error) {
+                console.error(error);
                 isSpinning = false;
-                tg.HapticFeedback.notificationOccurred('success');
-                
-                // Вычисляем, какой сектор выпал (опционально)
-                const actualDegree = currentRotation % 360;
-                console.log("Остановилось на градусе:", actualDegree);
-                
-                // Здесь можно вывести Alert с выигрышем
-                // tg.showAlert("Поздравляем! Ваша скидка сохранена.");
-            }, 4000);
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "auto";
+                tg.showAlert("Не удалось выполнить розыгрыш. Попробуйте снова.");
+            }
         });
     </script>
 </body>
 </html>
-
 
 
