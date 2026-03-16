@@ -15,43 +15,48 @@
             --btn-black: linear-gradient(180deg, #1C1C1A 0%, #000000 100%);
         }
 
-        /* Полный сброс */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            /* Запрет горизонтального переполнения на каждом элементе */
+            max-width: 100%;
         }
 
-        html {
+        html, body {
+            /* Жёстко фиксируем ширину — никакого 100vw */
             width: 100%;
             height: 100%;
             overflow-x: hidden;
+            overflow-y: auto;
+            /* iOS Safari: отключаем bounce по горизонтали */
+            overscroll-behavior-x: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         body {
-            width: 100%;
-            min-height: 100%;
-            /* Градиент фиксируем по viewport — никаких белых полос при растягивании */
             background: var(--bg-grad);
-            background-attachment: fixed;
+            /* fixed не работает корректно в iOS TMA — заменяем на scroll */
+            background-attachment: scroll;
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            overflow-y: auto;
+            /* Дополнительная защита от горизонтального выхода */
+            position: relative;
         }
 
         .app-wrapper {
             width: 100%;
-            max-width: 100%;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             display: flex;
             flex-direction: column;
             background: transparent;
             position: relative;
-            overflow-x: hidden;
+            /* Три уровня защиты от горизонтального переполнения */
+            overflow: hidden;
         }
 
-        /* Шапка — растягивается на всю ширину */
+        /* Шапка */
         .header-image {
             width: 100%;
             display: block;
@@ -65,13 +70,12 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            /* left: 31px из Figma → padding 31px с обеих сторон */
             padding: 0 31px;
             margin-top: -5%;
             z-index: 2;
         }
 
-        /* Внутренний ограничитель: макет Figma 390px, контент до правого края ~360px */
+        /* Внутренний ограничитель */
         .content-inner {
             width: 100%;
             max-width: 560px;
@@ -80,26 +84,27 @@
             flex-direction: column;
         }
 
-        /* Секция с товаром и текстом */
+        /* Hero секция */
         .hero {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            /* subtitle top=191px, title top=85px → gap между hero и кнопками = 319-191-96=32px */
             margin-bottom: 32px;
             flex-wrap: nowrap;
             gap: 8px;
+            /* Не даём блоку растянуться шире родителя */
+            overflow: hidden;
         }
 
         .hero-text {
-            /* title top=85px — отступ от шапки обеспечивает margin-top content */
-            padding-top: 0;
-            flex: 1 1 auto;
+            /* flex: 1 + min-width: 0 — ключевой приём для iOS flex overflow */
+            flex: 1 1 0;
+            min-width: 0;
         }
 
         .title {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            /* Figma: 48px, line-height 100% */
             font-size: 48px;
             line-height: 1;
             text-transform: uppercase;
@@ -107,57 +112,58 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            /* Обрезаем если не влезает */
+            word-break: break-word;
         }
 
         .subtitle {
-            /* Figma: top=191px, title top=85px+59px*2=203px → margin-top ≈ 0, но визуально ~12px */
             margin-top: 12px;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 300;
-            /* Figma: 13px, line-height 100% */
             font-size: 13px;
-            line-height: 1;
+            line-height: 1.4;
             max-width: 197px;
             color: #000000;
+            word-wrap: break-word;
         }
 
         .hero-img {
             flex: 0 0 auto;
-            width: clamp(130px, 36%, 180px);
+            width: clamp(120px, 36%, 175px);
             height: auto;
             border-radius: 20px;
             object-fit: cover;
+            /* Картинка не растягивает родителя */
+            display: block;
         }
 
         /* Кнопки */
         .btn-list {
             display: flex;
             flex-direction: column;
-            /* Figma: две кнопки — между ними ~11px (top2=397 - top1=319 - height=70 = 8px, округлим до 10) */
             gap: 10px;
             width: 100%;
         }
 
         .action-btn {
+            /* width: 100% без лишних отступов */
             width: 100%;
-            /* Figma Rectangle 3: height=70px */
             height: 70px;
-            /* Figma: gradient #1C1C1A → #000000 */
             background: linear-gradient(180deg, #1C1C1A 0%, #000000 100%);
-            /* Figma: radius=25px */
             border-radius: 25px;
             border: none;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            /* Figma: текст left=52px, кнопка left=31px → padding-left=21px */
             padding-left: 21px;
-            /* Нет padding-right — жёлтый блок вровень с правым краем */
             padding-right: 0;
-            overflow: hidden; /* жёлтый блок обрезается радиусом кнопки */
+            overflow: hidden;
             cursor: pointer;
-            /* Figma: drop shadow x=0 y=0 blur=20 spread=4 #000 25% */
             box-shadow: 0 0 20px 4px rgba(0,0,0,0.25);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
+            /* Убираем системные стили iOS */
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .action-btn:hover {
@@ -176,17 +182,16 @@
             font-size: 20px;
             text-align: left;
             line-height: 1.2;
+            /* Текст не выходит за кнопку */
+            flex: 1 1 0;
+            min-width: 0;
         }
 
         .btn-icon-box {
-            /* Figma Rectangle 5: width=104px height=70px radius=25px
-               height совпадает с кнопкой → покрывает полностью по высоте
-               border-radius только слева, правый край обрезает overflow:hidden родителя */
             width: 104px;
             height: 70px;
-            /* Figma: gradient #FFD250 → #FFC20F */
             background: linear-gradient(180deg, #FFD250 0%, #FFC20F 100%);
-            border-radius: 25px 25px 25px 25px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -201,10 +206,10 @@
         /* Футер */
         .footer {
             padding: 28px 20px;
+            padding-bottom: calc(28px + env(safe-area-inset-bottom));
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-bottom: calc(28px + env(safe-area-inset-bottom));
         }
 
         .logo {
@@ -257,7 +262,6 @@
     tg.expand();
     tg.setHeaderColor('#E8E8E8');
     tg.setBackgroundColor('#E8E8E8');
-    
 
     if (tg.isVersionAtLeast('7.7')) {
         tg.disableVerticalSwiping();
