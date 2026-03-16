@@ -105,15 +105,19 @@
         .title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            /* clamp: минимум чтобы влезло на узком экране, максимум 48px как в Figma */
             font-size: clamp(36px, 11vw, 48px);
             line-height: 1;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #000000 0%, #666666 100%);
+            /* Градиент растянут на весь блок через padding-bottom + отдельный контейнер */
+            color: transparent;
+            background: linear-gradient(180deg, #000000 0%, #888888 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            white-space: nowrap; /* каждая строка строго в одну */
+            /* Принудительно задаём высоту блока чтобы градиент покрыл обе строки */
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
         }
 
         .subtitle {
