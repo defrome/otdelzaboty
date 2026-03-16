@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tecmaster</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;0,800;1,300;1,600;1,800&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -64,12 +64,13 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            padding: 0 24px;
+            /* left: 31px из Figma → padding 31px с обеих сторон */
+            padding: 0 31px;
             margin-top: -5%;
             z-index: 2;
         }
 
-        /* Внутренний ограничитель читаемости */
+        /* Внутренний ограничитель: макет Figma 390px, контент до правого края ~360px */
         .content-inner {
             width: 100%;
             max-width: 560px;
@@ -83,20 +84,23 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            /* subtitle top=191px, title top=85px → gap между hero и кнопками = 319-191-96=32px */
             margin-bottom: 32px;
             flex-wrap: nowrap;
-            gap: 12px;
+            gap: 8px;
         }
 
         .hero-text {
-            padding-top: 8px;
+            /* title top=85px — отступ от шапки обеспечивает margin-top content */
+            padding-top: 0;
             flex: 1 1 auto;
         }
 
         .title {
             font-weight: 800;
-            font-size: clamp(36px, 10vw, 52px);
-            line-height: 0.88;
+            /* Figma: 48px, line-height 100% */
+            font-size: 48px;
+            line-height: 1;
             text-transform: uppercase;
             background: linear-gradient(180deg, #000000 0%, #666666 100%);
             -webkit-background-clip: text;
@@ -105,17 +109,19 @@
         }
 
         .subtitle {
-            margin-top: 16px;
+            /* Figma: top=191px, title top=85px+59px*2=203px → margin-top ≈ 0, но визуально ~12px */
+            margin-top: 12px;
             font-weight: 300;
+            /* Figma: 13px, line-height 100% */
             font-size: 13px;
-            line-height: 1.45;
-            max-width: 200px;
-            color: #000;
+            line-height: 1;
+            max-width: 197px;
+            color: #000000;
         }
 
         .hero-img {
             flex: 0 0 auto;
-            width: clamp(140px, 38%, 190px);
+            width: clamp(130px, 36%, 180px);
             height: auto;
             border-radius: 20px;
             object-fit: cover;
@@ -125,29 +131,37 @@
         .btn-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            /* Figma: две кнопки — между ними ~11px (top2=397 - top1=319 - height=70 = 8px, округлим до 10) */
+            gap: 10px;
             width: 100%;
         }
 
         .action-btn {
             width: 100%;
-            height: 80px;
-            background: var(--btn-black);
-            border-radius: 26px;
+            /* Figma Rectangle 3: height=70px */
+            height: 70px;
+            /* Figma: gradient #1C1C1A → #000000 */
+            background: linear-gradient(180deg, #1C1C1A 0%, #000000 100%);
+            /* Figma: radius=25px */
+            border-radius: 25px;
             border: none;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-left: 24px;
-            padding-right: 8px;
+            /* Figma: текст left=52px, кнопка left=31px → padding-left=21px */
+            padding-left: 21px;
+            /* Нет padding-right — жёлтый блок вровень с правым краем */
+            padding-right: 0;
+            overflow: hidden; /* жёлтый блок обрезается радиусом кнопки */
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+            /* Figma: drop shadow x=0 y=0 blur=20 spread=4 #000 25% */
+            box-shadow: 0 0 20px 4px rgba(0,0,0,0.25);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 24px 4px rgba(0,0,0,0.32);
         }
 
         .action-btn:active {
@@ -155,18 +169,23 @@
         }
 
         .btn-label {
-            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            color: #FFFFFF;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 20px;
             text-align: left;
-            line-height: 1.25;
+            line-height: 1.2;
         }
 
         .btn-icon-box {
-            width: 72px;
-            height: 64px;
-            background-color: var(--accent);
-            border-radius: 20px;
+            /* Figma Rectangle 5: width=104px height=70px radius=25px
+               height совпадает с кнопкой → покрывает полностью по высоте
+               border-radius только слева, правый край обрезает overflow:hidden родителя */
+            width: 104px;
+            height: 70px;
+            /* Figma: gradient #FFD250 → #FFC20F */
+            background: linear-gradient(180deg, #FFD250 0%, #FFC20F 100%);
+            border-radius: 25px 25px 25px 25px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -174,8 +193,8 @@
         }
 
         .btn-icon-box img {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
         }
 
         /* Футер */
