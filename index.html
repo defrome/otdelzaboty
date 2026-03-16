@@ -3,224 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Tecmaster - Главное меню</title>
-    
+    <title>Tecmaster</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-main: linear-gradient(180deg, #E8E8E8 0%, #C3C3C3 100%);
-            --text-grad: linear-gradient(180deg, #000000 0%, #666666 100%);
-            --btn-grad: linear-gradient(180deg, #000000 0%, #1C1C1A 100%);
-            --accent-color: #FFBE00;
+            --bg-color: #E8E8E8;
+            --bg-grad: linear-gradient(180deg, #E8E8E8 0%, #C3C3C3 100%);
+            --accent: #FFBE00;
+            --btn-black: linear-gradient(180deg, #1C1C1A 0%, #000000 100%);
         }
 
+        /* Полный сброс */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            line-height: 1.2;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body, html {
+        html {
             width: 100%;
             height: 100%;
-            background-color: #E8E8E8;
-            font-family: 'Montserrat', sans-serif;
         }
 
-        /* Основной скролл-контейнер */
-        .main-container {
+        body {
             width: 100%;
-            max-width: 422px;
+            min-height: 100%;
+            /* Градиент фиксируем по viewport — никаких белых полос при растягивании */
+            background: var(--bg-grad);
+            background-attachment: fixed;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Основной экран — ровно 100vw, никаких max-width */
+        .app-wrapper {
+            width: 100vw;
             min-height: 100vh;
-            background: var(--bg-main);
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            /* Прозрачный фон: общий фон body уже покрывает всё */
+            background: transparent;
             position: relative;
-            padding-bottom: 30px; /* Отступ под логотипом */
-            overflow-x: hidden;
         }
 
-        /* Декор сверху */
-        .upbar {
+        /* Шапка — растягивается на всю ширину */
+        .header-image {
             width: 100%;
-            height: auto;
+            display: block;
+            object-fit: cover;
             flex-shrink: 0;
         }
 
-        /* Контентная часть (Заголовок + Описание + Фото) */
-        .hero-section {
-            width: 100%;
-            padding: 20px 31px;
-            display: grid;
-            grid-template-columns: 1fr 143px; /* Текст слева, фото справа */
-            gap: 15px;
-            margin-top: -20px; /* Немного заходим под upbar для красоты */
-        }
-
-        .title-line {
-            font-weight: 800;
-            font-size: clamp(32px, 10vw, 48px);
-            text-transform: uppercase;
-            background: var(--text-grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: block;
-        }
-
-        .desc-text {
-            grid-column: 1 / 2;
-            font-weight: 300;
-            font-size: 13px;
-            color: #000000;
-            margin-top: 15px;
-            max-width: 200px;
-        }
-
-        .product-img {
-            width: 143px;
-            height: 215px;
-            border-radius: 25px;
-            object-fit: cover;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Контейнер кнопок */
-        .menu-buttons {
-            width: 100%;
-            padding: 30px 31px;
+        /* Контентная область */
+        .content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 21px;
-        }
-
-        .big-btn {
             width: 100%;
-            max-width: 360px;
-            height: 70px;
-            background: var(--btn-grad);
-            border-radius: 25px;
-            position: relative;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s;
-            overflow: hidden; /* Чтобы желтая вставка не вылезала */
-        }
-
-        .big-btn:active { transform: scale(0.98); }
-
-        .big-btn-text {
-            color: #FFFFFF;
-            font-weight: 600;
-            font-size: 18px;
-            margin-left: 21px;
-            text-align: left;
+            padding: 0 24px;
+            margin-top: -5%;
             z-index: 2;
         }
 
-        .btn-yellow-accent {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 80px; /* Чуть уменьшил для адаптивности */
-            height: 100%;
-            background-color: var(--accent-color);
+        /* Внутренний ограничитель читаемости */
+        .content-inner {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Секция с товаром и текстом */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            flex-wrap: nowrap;
+            gap: 12px;
+        }
+
+        .hero-text {
+            padding-top: 8px;
+            flex: 1 1 auto;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: clamp(36px, 10vw, 52px);
+            line-height: 0.88;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #000000 0%, #666666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            margin-top: 16px;
+            font-weight: 300;
+            font-size: 13px;
+            line-height: 1.45;
+            max-width: 200px;
+            color: #000;
+        }
+
+        .hero-img {
+            flex: 0 0 auto;
+            width: clamp(140px, 38%, 190px);
+            height: auto;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        /* Кнопки */
+        .btn-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .action-btn {
+            width: 100%;
+            height: 80px;
+            background: var(--btn-black);
+            border-radius: 26px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 24px;
+            padding-right: 8px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-label {
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: left;
+            line-height: 1.25;
+        }
+
+        .btn-icon-box {
+            width: 72px;
+            height: 64px;
+            background-color: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-icon-box img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Футер */
+        .footer {
+            padding: 28px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 20px;
+            padding-bottom: calc(28px + env(safe-area-inset-bottom));
         }
 
-        .arrow-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Прослойка, выталкивающая лого вниз */
-        .spacer {
-            flex-grow: 1;
-            min-height: 40px;
-        }
-
-        .bottom-logo {
-            width: 104px;
-            height: auto;
-            flex-shrink: 0;
+        .logo {
+            width: 120px;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
 
-    <main class="main-container">
-        <img src="assets/images/upbar.png" class="upbar">
+<div class="app-wrapper">
+    <img src="assets/images/upbar.png" class="header-image" alt="">
 
-        <section class="hero-section">
-            <div class="text-side">
-                <span class="title-line">ОТДЕЛ</span>
-                <span class="title-line">ЗАБОТЫ</span>
-                <p class="desc-text">
-                    Многофункциональные электрические распылители для интерьерных красок, эмалей, пропиток для дерева и других материалов.
-                </p>
+    <div class="content">
+        <div class="content-inner">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="title">ОТДЕЛ<br>ЗАБОТЫ</div>
+                    <p class="subtitle">Электрические распылители для красок, эмалей и пропиток.</p>
+                </div>
+                <img src="assets/images/tecmasterimage_1.png" class="hero-img" alt="">
             </div>
-            <img src="assets/images/tecmasterimage_1.png" class="product-img">
-        </section>
 
-        <div class="menu-buttons">
-            <button class="big-btn" id="lottery-btn">
-                <span class="big-btn-text">Беспроигрышная<br>лотерея</span>
-                <div class="btn-yellow-accent">
-                    <img src="assets/images/button_image.png" class="arrow-icon">
-                </div>
-            </button>
+            <div class="btn-list">
+                <button class="action-btn" onclick="openPage('pages/check.html')">
+                    <span class="btn-label">Беспроигрышная<br>лотерея</span>
+                    <div class="btn-icon-box">
+                        <img src="assets/images/button_image.png" alt="">
+                    </div>
+                </button>
 
-            <button class="big-btn" id="support-link">
-                <span class="big-btn-text">С покупкой<br>что-то не так</span>
-                <div class="btn-yellow-accent">
-                    <img src="assets/images/button_image.png" class="arrow-icon">
-                </div>
-            </button>
+                <button class="action-btn" onclick="openSupport()">
+                    <span class="btn-label">С покупкой<br>что-то не так</span>
+                    <div class="btn-icon-box">
+                        <img src="assets/images/button_image.png" alt="">
+                    </div>
+                </button>
+            </div>
         </div>
+    </div>
 
-        <div class="spacer"></div>
+    <div class="footer">
+        <img src="assets/images/spraystorelogo.png" class="logo" alt="">
+    </div>
+</div>
 
-        <img src="assets/images/spraystorelogo.png" class="bottom-logo">
-    </main>
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor('#E8E8E8');
+    tg.setBackgroundColor('#E8E8E8');
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        
-        try {
-            tg.ready();
-            tg.expand();
-            if (tg.isVersionAtLeast && tg.isVersionAtLeast('7.7')) {
-                tg.disableVerticalSwiping();
-            }
-            tg.setHeaderColor('#E8E8E8');
-            tg.setBackgroundColor('#E8E8E8');
-        } catch (e) {
-            console.warn("Telegram WebApp API не найдено");
-        }
+    if (tg.isVersionAtLeast('7.7')) {
+        tg.disableVerticalSwiping();
+    }
 
-        document.getElementById('lottery-btn').onclick = function() {
-            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            window.location.href = 'pages/check.html';
-        };
+    function openPage(url) {
+        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        window.location.href = url;
+    }
 
-        document.getElementById('support-link').onclick = function() {
-            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            // tg.openTelegramLink('https://t.me/your_bot_support'); 
-        };
-    </script>
+    function openSupport() {
+        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        // tg.openTelegramLink('...');
+    }
+</script>
+
 </body>
 </html>
-
